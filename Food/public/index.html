@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="PizzaZoon - Authentic Wood-Fired Pizza Delivery. 100% Wisconsin Mozzarella, Fresh Hand-Tossed Dough & 20-Min Express Hot Delivery!"
+    />
+
+    <!-- Suppress third-party Chrome extension errors (MetaMask / wallets) from showing dev overlay -->
+    <style>
+      iframe[style*="2147483647"],
+      body > iframe[style*="z-index: 2147483647"] {
+        display: none !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+      }
+    </style>
+    <script>
+      (function() {
+        function shouldSuppress(e) {
+          if (!e) return false;
+          var msg = (e.message || '') + ' ' + (e.reason && e.reason.message ? e.reason.message : '');
+          var stack = (e.filename || '') + ' ' + (e.error && e.error.stack ? e.error.stack : '') + ' ' + (e.reason && e.reason.stack ? e.reason.stack : '');
+          return msg.indexOf('MetaMask') !== -1 ||
+                 stack.indexOf('chrome-extension') !== -1 ||
+                 msg.indexOf('chrome-extension') !== -1;
+        }
+
+        window.addEventListener('error', function(event) {
+          if (shouldSuppress(event)) {
+            event.stopImmediatePropagation();
+            event.preventDefault();
+            return true;
+          }
+        }, true);
+
+        window.addEventListener('unhandledrejection', function(event) {
+          if (shouldSuppress(event)) {
+            event.stopImmediatePropagation();
+            event.preventDefault();
+            return true;
+          }
+        }, true);
+
+        // Auto-remove error overlay if injected by CRA dev client
+        var observer = new MutationObserver(function(mutations) {
+          for (var i = 0; i < mutations.length; i++) {
+            var added = mutations[i].addedNodes;
+            for (var j = 0; j < added.length; j++) {
+              var node = added[j];
+              if (node.tagName === 'IFRAME' && node.style && node.style.zIndex === '2147483647') {
+                node.style.display = 'none';
+                node.remove();
+              }
+            }
+          }
+        });
+        observer.observe(document.documentElement, { childList: true, subtree: true });
+      })();
+    </script>
+
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>PizzaZoon - Wood-Fired Pizza Delivery | Hot in 20 Mins</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+  </body>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</html>
