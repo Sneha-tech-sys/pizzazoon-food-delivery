@@ -46,6 +46,7 @@ export default function Food() {
         }
       } catch (err) {
         console.warn("Backend products offline, using local catalog:", err);
+        setError("Backend offline, using fallback catalog");
         setProductsList(Data);
       } finally {
         setLoading(false);

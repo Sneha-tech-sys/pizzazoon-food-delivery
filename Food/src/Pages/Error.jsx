@@ -33,7 +33,7 @@ export default function Error() {
           justifyContent: "center",
         }}
       >
-        <img src={`${process.env.PUBLIC_URL}/Assets/not.png`} />
+        <img src={`${process.env.PUBLIC_URL}/Assets/not.png`} alt="Page Not Found" />
       </div>
     </div>
   );

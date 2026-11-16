@@ -30,6 +30,7 @@ export default function AdminContacts() {
 
   useEffect(() => {
     fetchContacts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusFilter]);
 
   const handleStatusChange = async (contactId, status) => {

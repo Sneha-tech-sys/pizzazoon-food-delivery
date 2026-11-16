@@ -40,6 +40,7 @@ export default function AdminOrders() {
 
   useEffect(() => {
     fetchOrders();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusFilter]);
 
   const handleSearchSubmit = (e) => {

@@ -84,6 +84,7 @@ export default function OrderTracking() {
       clearInterval(pingInterval);
       socket.close();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const handleCancel = async () => {
