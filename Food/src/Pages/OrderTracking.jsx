@@ -40,7 +40,11 @@ export default function OrderTracking() {
 
     // WebSocket connection
     const token = localStorage.getItem('access_token');
-    const wsBaseUrl = process.env.REACT_APP_WS_BASE_URL || 'ws://localhost:8000/ws';
+    const wsBaseUrl = process.env.REACT_APP_WS_BASE_URL || (
+      typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+        ? 'ws://localhost:8000/ws'
+        : 'wss://pizzazoon-food-delivery.onrender.com/ws'
+    );
     const socket = new WebSocket(`${wsBaseUrl}/orders/${id}?token=${token}`);
     wsRef.current = socket;
 
