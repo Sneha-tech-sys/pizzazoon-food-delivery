@@ -6,6 +6,7 @@ import os
 
 from app.core.config import settings
 from app.database.connection import engine, Base
+from app.seed.create_admin import seed_database
 import app.models  # ensure all models registered
 from app.routers import (
     auth,
@@ -26,6 +27,11 @@ async def lifespan(app: FastAPI):
     # 1. Automatically create tables if not existing
     Base.metadata.create_all(bind=engine)
     print("Database tables verified.")
+    try:
+        seed_database()
+        print("Database seeded with initial admin, roles, categories, and products.")
+    except Exception as e:
+        print(f"Seed note: {e}")
     yield
 
 
